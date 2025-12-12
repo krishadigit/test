@@ -1,0 +1,70 @@
+<?php
+/** @var $block \Magento\Catalog\Block\Product\View */
+$_product = $block->getProduct();
+$buttonTitle = __('Order Now');
+$btntitle = __('Buy Now');
+?>
+
+<?php if ($_product->isSaleable()) : ?>
+<form action="<?= $block->getAddToCartUrl($_product) ?>" method="post" id="product_addtocart_form">
+    <?= $block->getBlockHtml('formkey') ?>
+
+    <div class="box-tocart">
+        <div class="fieldset">
+
+            <?php if ($block->shouldRenderQuantity()) : ?>
+            <div class="field qty">
+                <label class="label" for="qty">
+                    <span><?= $block->escapeHtml(__('Qty')) ?></span>
+                </label>
+                <div class="control">
+                    <input type="number"
+                           name="qty"
+                           id="qty"
+                           min="1"
+                           value="<?= $block->getProductDefaultQty() * 1 ?>"
+                           title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                           class="input-text qty"/>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <div class="actions custom-buttons-wrapper">
+
+                <!-- Order Now -->
+                <button type="button"
+                        title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                        class="action primary order-now"
+                        data-action="order-now">
+                    <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                </button>
+
+                <!-- Buy Now -->
+                <button type="submit"
+                        title="<?= $block->escapeHtmlAttr($btntitle) ?>"
+                        class="action primary buy-now"
+                        data-action="buy-now">
+                    <span><?= $block->escapeHtml($btntitle) ?></span>
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<script type="text/x-magento-init">
+{
+    "#product_addtocart_form": {
+        "Magento_Catalog/js/validate-product": {}
+    }
+}
+</script>
+
+<script>
+    require(['buynow'], function(buynow){
+        buynow();
+    });
+</script>
+
+<?php endif; ?>

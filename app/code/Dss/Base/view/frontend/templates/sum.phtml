@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple PHP Sum in Magento 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        label {
+            font-weight: bold;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+
+<form method="post" action="">
+    <!-- Magento form key (CSRF protection) -->
+    <input type="hidden" name="form_key" value="<?php echo $block->getFormKey(); ?>" />
+
+    <label>Enter First Number:</label>
+    <input type="number" name="num1" value="<?php echo $_POST['num1'] ?? ''; ?>" type="" ><br><br>
+
+    <label>Enter Second Number:</label>
+    <input type="number" name="num2" value="<?php echo $_POST['num2'] ?? ''; ?>" ><br><br>
+
+    <input class="btn" type="submit" name="submit" value="Calculate">
+</form>
+
+<?php
+$sum = $block->calculateSum();
+if ($sum !== null) {
+    echo "<div class='result'>Sum is: " . $_POST['num1'] . " + " . $_POST['num2'] . " = <strong>$sum</strong></div>";
+}
+?>
+
+</body>
+</html>
